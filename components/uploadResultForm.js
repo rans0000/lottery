@@ -20,11 +20,9 @@ const UploadResultForm = () => {
         console.log(file);
         const response = await fetch('/api/lottery', {
             method: 'post',
-            body: formData
+            body: formData,
         });
         console.log(response);
-        // const result = JSON.parse(response);
-        // console.log(result);
     };
 
     return (
