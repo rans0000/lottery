@@ -4,8 +4,11 @@ import Head from 'next/head';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
+
+import '../styles/globals.css';
 import theme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
+import AppLayout from '../components/AppLayout';
 
 // Client-side cache shared for the whole session 
 // of the user in the browser.
@@ -28,7 +31,9 @@ export default function MyApp(props) {
                 build upon. */}
 
         <CssBaseline />
-        <Component {...pageProps} />
+        <AppLayout>
+          <Component {...pageProps} />
+        </AppLayout>
       </ThemeProvider>
     </CacheProvider>
   );
