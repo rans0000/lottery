@@ -17,12 +17,16 @@ const UploadResultForm = () => {
                 'content-type': 'multipart/form-data',
             }
         };
-        console.log(file);
-        const response = await fetch('/api/lottery', {
-            method: 'post',
-            body: formData,
-        });
-        console.log(response);
+        try {
+            const response = await fetch('/api/lottery', {
+                method: 'post',
+                body: formData,
+            });
+            const result = await response.json();
+            console.log(result);
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (

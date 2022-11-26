@@ -1,6 +1,7 @@
-import { PdfReader } from 'pdfreader';
 import { createRouter, expressWrapper } from 'next-connect';
 import multer from 'multer';
+import clientPromise from '../../../classes/db';
+import { parseLotterBuffer, saveLotteryResultToDB } from '../../../controllers/lottery_controller';
 
 const upload = multer({
     storage: multer.memoryStorage(),
@@ -10,19 +11,21 @@ const apiRoute = createRouter();
 
 apiRoute.use(upload.array('lotteryResult'));
 
-apiRoute.post((req, res) => {
-    console.log('soll');
-    console.log(req);
-    //--------
-    new PdfReader().parseBuffer(req.files[0].buffer, (err, item) => {
-        if (err) console.error("error:", err);
-        else if (!item) {
-            console.warn("end of buffer");
-            res.status(200).json({ data: 'success' });
-        }
-        else if (item.text) console.log(item.text);
-    });
-    //--------
+apiRoute.post(async (req, res) => {
+    /** Handle pdf post from admin - parse & save to db **/
+    console.log('in post handler');
+    try {
+        const client = await clientPromise;
+        const db = client.db('test');
+        const result = await parseLotterBuffer(req.files[0].buffer, db);
+        await saveLotteryResultToDB(result);
+        res.status(200).json({ data: 'success' });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({ error: 'error while reading/saving lottery result' });
+    }
+
 });
 export default apiRoute.handler({
     onError: (error, req, res) => {
@@ -39,25 +42,3 @@ export const config = {
         externalResolver: true,
     },
 };
-
-// export default function handler(req, res) {
-//     console.log('req method: ', req.method);
-//     switch (req.method.toLowerCase()) {
-//         case 'post':
-//             res.status(200).json({ status: 'success', payload: { id: 'tempId' } });
-//             console.log('POOOOOOOOOOSTED...');
-//             // console.log(req.body);
-//             //-------------
-//             // new PdfReader().parseBuffer(req.body, (err, item) => {
-//             //     if (err) console.error("error:", err);
-//             //     else if (!item) console.warn("end of buffer");
-//             //     else if (item.text) console.log(item.text);
-//             // });
-//             //-------------
-//             break;
-//         default:
-//             console.log('NOO...');
-//             res.status(500).json({ status: 'error', payload: { message: 'Something went wrong!!' } });
-//             break;
-//     }
-// }
