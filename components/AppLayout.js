@@ -8,7 +8,7 @@ const AppLayout = ({ children }) => {
     return (
         <>
             <AppHeader />
-            <Box component='main'>
+            <Box component='main' style={{ flexGrow: 1, overflowY: 'auto' }}>
                 {children}
             </Box>
             <AppFooter />

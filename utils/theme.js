@@ -18,6 +18,7 @@ const theme = createTheme({
         MuiCssBaseline: {
             styleOverrides: {
                 body: {
+                    height: '100vh',
                     display: 'flex',
                     flexDirection: 'column',
                 }
