@@ -1,15 +1,18 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
+import Head from 'next/head';
+
+import styles from '../styles/Home.module.css';
+import LotteryNumberSearchForm from '../components/LotteryNumberSearchForm';
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Lottery Website | Home</title>
       </Head>
 
-      <div className={styles.main}>
-        home page
+      <div>
+        <br />
+        <LotteryNumberSearchForm />
       </div>
     </div>
   );

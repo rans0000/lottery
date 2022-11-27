@@ -4,6 +4,8 @@ import Head from 'next/head';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 
 import '../styles/globals.css';
 import theme from '../utils/theme';
@@ -32,7 +34,9 @@ export default function MyApp(props) {
 
         <CssBaseline />
         <AppLayout>
-          <Component {...pageProps} />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <Component {...pageProps} />
+          </LocalizationProvider>
         </AppLayout>
       </ThemeProvider>
     </CacheProvider>
