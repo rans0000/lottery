@@ -50,4 +50,37 @@ const saveLotteryResultToDB = async (result, db) => {
     return promise;
 };
 
-export { parseLotterBuffer, saveLotteryResultToDB };
+const searchForPrize = async (ticketNo, date, db) => {
+    //-----------------------------------
+    /**@todo: handle empty db response */
+
+    let value;
+    const promise = new Promise((resolve, reject) => {
+        try {
+            db.collection('results')
+                .aggregate([
+                    { '$unwind': '$entries' },
+                    { '$match': { 'entries.ticketNo': ticketNo, date: date } },
+                    {
+                        '$project': {
+                            'ticketNo': '$entries.ticketNo',
+                            'prize': '$entries.prize',
+                        }
+                    }
+                ])
+                .forEach(doc => value = doc)
+                .then(() => {
+                    console.log('value...', value);
+                    resolve(value || null);
+                });
+        }
+        catch (error) {
+            console.log(error);
+            reject(error);
+        }
+    });
+
+    return promise;
+};
+
+export { parseLotterBuffer, saveLotteryResultToDB, searchForPrize };

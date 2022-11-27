@@ -18,7 +18,7 @@ LotteryResult.prototype.identifier = function (match, key, data, is4Lettered = f
 LotteryResult.prototype.dateParser = function (data) {
     const date = data.match(/held on:.+(\d{2})\/(\d{2})\/(\d{4})/);
     if (date !== null) {
-        this.result.date = date[3] + date[2] + date[1];
+        this.result.date = `${date[3]}-${date[2]}-${date[1]}`;
     }
     return this;
 }
