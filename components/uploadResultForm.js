@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 const UploadResultForm = () => {
     const [file, setFile] = useState();
@@ -18,7 +18,7 @@ const UploadResultForm = () => {
             }
         };
         try {
-            const response = await fetch('/api/lottery', {
+            const response = await fetch('/api/lottery/result', {
                 method: 'post',
                 body: formData,
             });

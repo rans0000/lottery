@@ -1,5 +1,4 @@
 import { PdfReader } from 'pdfreader';
-import clientPromise from '../classes/db';
 import LotteryResult from '../classes/lottery_result';
 
 const parseLotterBuffer = buffer => {
