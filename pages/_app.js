@@ -10,7 +10,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import '../styles/globals.css';
 import theme from '../utils/theme';
 import createEmotionCache from '../utils/createEmotionCache';
-import AppLayout from '../components/AppLayout';
+import AppLayout from '../components/layout/AppLayout';
 
 // Client-side cache shared for the whole session 
 // of the user in the browser.

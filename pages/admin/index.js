@@ -1,4 +1,4 @@
-import UploadResultForm from "../../components/uploadResultForm";
+import UploadResultForm from "../../components/lottery/UploadResultForm";
 
 const AdminPage = () => {
     return (

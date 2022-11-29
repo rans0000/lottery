@@ -14,16 +14,16 @@ import Typography from '@mui/material/Typography';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs'
 
-const LotteryNumberSearchForm = props => {
+const TicketNoSearchForm = props => {
 
-    const [lotteryNumber, setLotteryNumber] = useState('');
+    const [ticketNo, setTicketNo] = useState('');
     const [date, setDate] = useState(dayjs());
     const [isAlertOpen, setAlertOpen] = useState(false);
     const [lotteryResult, setLotteryResult] = useState(null);
 
     const onInputChange = event => {
         const value = event.target.value;
-        setLotteryNumber(value.substring(0, 9).toUpperCase());
+        setTicketNo(value.substring(0, 9).toUpperCase());
     };
 
     const onDateChange = newDate => {
@@ -35,14 +35,14 @@ const LotteryNumberSearchForm = props => {
     };
 
     const isFormValid = request => {
-        return request.lotteryNumber.length > 0;
+        return request.ticketNo.length > 0;
     };
 
     const onSubmit = async event => {
         event.preventDefault();
         /**@todo: form validation */
         const request = {
-            lotteryNumber: encodeURIComponent(lotteryNumber.trim()),
+            ticketNo: encodeURIComponent(ticketNo.trim()),
             date: encodeURIComponent(dayjs(date).format('YYYY-MM-DD'))
         };
         if (!isFormValid(request)) {
@@ -50,7 +50,7 @@ const LotteryNumberSearchForm = props => {
             return;
         }
         try {
-            const response = await fetch(`/api/lottery/prize?ticketNo=${request.lotteryNumber}&date=${request.date}`);
+            const response = await fetch(`/api/lottery/prize?ticketNo=${request.ticketNo}&date=${request.date}`);
             const result = await response.json();
             setLotteryResult(result?.payload);
 
@@ -71,11 +71,11 @@ const LotteryNumberSearchForm = props => {
                         spacing={2}
                     >
                         <TextField
-                            id='lotteryNumber'
+                            id='ticketNo'
                             label='Lottery Number'
                             variant='outlined'
                             placeholder='ex: WT 529148 or 9148'
-                            value={lotteryNumber}
+                            value={ticketNo}
                             onChange={onInputChange}
                         />
                         <DatePicker
@@ -121,4 +121,4 @@ const LotteryNumberSearchForm = props => {
     );
 };
 
-export default LotteryNumberSearchForm;
+export default TicketNoSearchForm;
