@@ -1,7 +1,7 @@
 import { PdfReader } from 'pdfreader';
 import LotteryResult from '../classes/lottery_result';
 
-const parseLotterBuffer = buffer => {
+const parseLotteryBuffer = buffer => {
     let data = '';
     let lotteryResult = new LotteryResult();
     const is4Lettered = true;
@@ -83,4 +83,4 @@ const searchForPrize = async (ticketNo, date, db) => {
     return promise;
 };
 
-export { parseLotterBuffer, saveLotteryResultToDB, searchForPrize };
+export { parseLotteryBuffer, saveLotteryResultToDB, searchForPrize };
