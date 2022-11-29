@@ -89,11 +89,14 @@ const LotteryNumberSearchForm = props => {
                         {
                             lotteryResult !== null && (
                                 <Card style={{ padding: 20 }}>
-                                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                                    <Typography variant='body2' gutterBottom>
                                         {lotteryResult.prize}
                                     </Typography>
-                                    <Typography variant="h5" component="div">
+                                    <Typography variant="subtitle1" component="div">
                                         {lotteryResult.ticketNo}
+                                    </Typography>
+                                    <Typography variant="h5" component="div">
+                                        Rs. {lotteryResult.prizes[lotteryResult.prize]}/-
                                     </Typography>
                                 </Card>
                             )}

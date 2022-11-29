@@ -1,5 +1,5 @@
 function LotteryResult() {
-    this.result = { entries: [] };
+    this.result = { entries: [], prizes: {} };
     this.prop = '';
     this.is4Lettered = false;
 }
@@ -10,7 +10,7 @@ LotteryResult.prototype.identifyPrize = function (match, key, data, is4Lettered 
         const tmp = data.match(/(\d{2,})\/-/);
         this.prop = key;
         this.is4Lettered = is4Lettered;
-        this.result[key] = tmp[1];
+        this.result.prizes[key] = tmp[1];
     }
     return this;
 };

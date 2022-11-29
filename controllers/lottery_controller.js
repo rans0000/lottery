@@ -78,6 +78,7 @@ const searchForPrize = async (ticketNo, date, db) => {
                         '$project': {
                             'ticketNo': '$entries.ticketNo',
                             'prize': '$entries.prize',
+                            'prizes': '$prizes'
                         }
                     }
                 ])
