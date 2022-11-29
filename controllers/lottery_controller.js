@@ -18,16 +18,17 @@ const parsePdf = function (resolve, reject) {
         else if (item.text) {
             data += item.text;
             lotteryResult
-                .dateParser(item.text)
-                .identifier('1st Prize Rs', 'prize1', item.text)
-                .identifier('Cons Prize-Rs', 'prizeCons', item.text)
-                .identifier('2nd Prize Rs', 'prize2', item.text)
-                .identifier('3rd Prize Rs', 'prize3', item.text)
-                .identifier('4th Prize-Rs', 'prize4', item.text, is4Lettered)
-                .identifier('5th Prize-Rs', 'prize5', item.text, is4Lettered)
-                .identifier('6th Prize-Rs', 'prize6', item.text, is4Lettered)
-                .identifier('7th Prize-Rs', 'prize7', item.text, is4Lettered)
-                .identifier('8th Prize-Rs', 'prize8', item.text, is4Lettered)
+                .parseDate(item.text)
+                .parseLotteryNo(item.text)
+                .identifyPrize('1st Prize Rs', 'prize1', item.text)
+                .identifyPrize('Cons Prize-Rs', 'prizeCons', item.text)
+                .identifyPrize('2nd Prize Rs', 'prize2', item.text)
+                .identifyPrize('3rd Prize Rs', 'prize3', item.text)
+                .identifyPrize('4th Prize-Rs', 'prize4', item.text, is4Lettered)
+                .identifyPrize('5th Prize-Rs', 'prize5', item.text, is4Lettered)
+                .identifyPrize('6th Prize-Rs', 'prize6', item.text, is4Lettered)
+                .identifyPrize('7th Prize-Rs', 'prize7', item.text, is4Lettered)
+                .identifyPrize('8th Prize-Rs', 'prize8', item.text, is4Lettered)
                 .append(item.text);
         }
     };
