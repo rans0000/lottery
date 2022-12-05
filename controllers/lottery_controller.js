@@ -51,9 +51,8 @@ const parseLotteryBuffer = buffer => {
 
 const saveLotteryResultToDB = async (result, db) => {
     const promise = new Promise(async (resolve, reject) => {
-        let response;
         try {
-            response = await db.collection('results').replaceOne({ date: result.date }, result, { upsert: true });
+            const response = await db.collection('results').replaceOne({ date: result.date }, result, { upsert: true });
             console.log('pdf upload success:...', response);
             resolve(response);
         } catch (error) {
@@ -89,7 +88,6 @@ const searchForPrize = async (ticketNo, date, db) => {
                 });
         }
         catch (error) {
-            console.log(error);
             reject(error);
         }
     });
@@ -97,4 +95,18 @@ const searchForPrize = async (ticketNo, date, db) => {
     return promise;
 };
 
-export { parseLotteryFile, parseLotteryBuffer, saveLotteryResultToDB, searchForPrize };
+const loadLotteryResultByKey = async (key, value, db) => {
+    const promise = new Promise(async (resolve, reject) => {
+        try {
+            let filter = {};
+            filter[key] = value;
+            const response = await db.collection('results').findOne(filter);
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });
+    return promise;
+};
+
+export { parseLotteryFile, parseLotteryBuffer, saveLotteryResultToDB, searchForPrize, loadLotteryResultByKey };
