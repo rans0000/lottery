@@ -19,7 +19,7 @@ const TicketNoSearchForm = props => {
     const [ticketNo, setTicketNo] = useState('');
     const [date, setDate] = useState(dayjs());
     const [isAlertOpen, setAlertOpen] = useState(false);
-    const [lotteryResult, setLotteryResult] = useState(null);
+    const [lotteryResult, setLotteryResult] = useState();
 
     const onInputChange = event => {
         const value = event.target.value;
@@ -87,7 +87,7 @@ const TicketNoSearchForm = props => {
                         />
                         <Button type='submit' variant='contained'>Contained</Button>
                         {
-                            lotteryResult !== null && (
+                            (lotteryResult instanceof Object && lotteryResult !== null) && (
                                 <Card style={{ padding: 20 }}>
                                     <Typography variant='body2' gutterBottom>
                                         {lotteryResult.prize}
@@ -100,6 +100,15 @@ const TicketNoSearchForm = props => {
                                     </Typography>
                                 </Card>
                             )}
+                        {
+                            lotteryResult === null && (
+                                <Card style={{ padding: 20 }}>
+                                    <Stack style={{ height: 50 }} justifyContent="center" alignItems="center">
+                                        <Typography variant='body2'>No prize!! unfortunately</Typography>
+                                    </Stack>
+                                </Card>
+                            )
+                        }
                     </Stack>
                 </Box>
             </Card>
