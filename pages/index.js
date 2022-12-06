@@ -5,9 +5,10 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 
 import TicketNoSearchForm from '../components/lottery/TicketNoSearchForm';
+import LotteryNoSearch from '../components/lottery/LotteryNoSearch';
 
 export default function Home() {
-  const [currentTab, setCurrentTab] = React.useState(0);
+  const [currentTab, setCurrentTab] = React.useState(1);
 
   const onTabChange = (event, value) => {
     setCurrentTab(value);
@@ -26,7 +27,7 @@ export default function Home() {
         <TicketNoSearchForm />
       </TabPanel>
       <TabPanel value={currentTab} index={1}>
-        results page...
+        <LotteryNoSearch />
       </TabPanel>
       <div>
         <br />
