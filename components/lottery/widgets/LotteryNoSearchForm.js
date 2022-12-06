@@ -39,7 +39,7 @@ const LotteryNoSearchForm = props => {
     };
 
     return (
-        <Box component='form' onSubmit={onSubmit}>
+        <Box sx={{ pt: 3 }} component='form' onSubmit={onSubmit}>
             <Stack
                 direction='column'
                 justifyContent='center'

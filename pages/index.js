@@ -1,11 +1,12 @@
 import React from 'react';
-import Head from 'next/head';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Head from 'next/head';
 
-import TicketNoSearchForm from '../components/lottery/TicketNoSearchForm';
 import LotteryNoSearch from '../components/lottery/LotteryNoSearch';
+import TicketNoSearchForm from '../components/lottery/TicketNoSearchForm';
 
 export default function Home() {
   const [currentTab, setCurrentTab] = React.useState(1);
@@ -15,7 +16,7 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <Container maxWidth='lg'>
       <Head>
         <title>Lottery Website | Home</title>
       </Head>
@@ -32,7 +33,7 @@ export default function Home() {
       <div>
         <br />
       </div>
-    </div>
+    </Container>
   );
 }
 
@@ -41,7 +42,7 @@ function TabPanel(props) {
 
   return value === index ? (
     <Box
-      sx={{ p: 3 }}
+      sx={{ py: 3 }}
       role='tabpanel'
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}

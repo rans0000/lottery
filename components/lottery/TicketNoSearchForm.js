@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs from 'dayjs'
+import dayjs from 'dayjs';
 
 const TicketNoSearchForm = props => {
 
@@ -85,7 +84,7 @@ const TicketNoSearchForm = props => {
                             onChange={onDateChange}
                             renderInput={(params) => <TextField {...params} />}
                         />
-                        <Button type='submit' variant='contained'>Contained</Button>
+                        <Button type='submit' variant='contained'>Search</Button>
                         {
                             (lotteryResult instanceof Object && lotteryResult !== null) && (
                                 <Card style={{ padding: 20 }}>

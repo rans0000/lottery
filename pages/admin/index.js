@@ -1,11 +1,11 @@
-import UploadResultForm from "../../components/lottery/UploadResultForm";
+import Container from '@mui/material/Container';
+import UploadResultForm from '../../components/lottery/UploadResultForm';
 
 const AdminPage = () => {
     return (
-        <div>
-            admin page...
+        <Container maxWidth='lg'>
             <UploadResultForm />
-        </div>
+        </Container>
     );
 };
 

@@ -1,4 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
 
 const UploadResultForm = () => {
     const [file, setFile] = useState();
@@ -30,10 +34,22 @@ const UploadResultForm = () => {
     };
 
     return (
-        <form method="post" encType="multipart/form-data" onSubmit={onSubmit}>
-            <input type="file" name="lotteryResult" onChange={onSelectFile} />
-            <button type="submit">Upload</button>
-        </form>
+        <Box style={{ paddingTop: 30 }}>
+            <Stack
+                method="post"
+                component='form'
+                encType="multipart/form-data"
+                direction='row'
+                spacing={2}
+                onSubmit={onSubmit}
+            >
+                <Button variant='outlined' component='label'>
+                    <AddIcon />Add File
+                    <input type="file" name="lotteryResult" onChange={onSelectFile} hidden />
+                </Button>
+                <Button type='submit' variant='contained'>Upload</Button>
+            </Stack>
+        </Box>
     );
 };
 
