@@ -21,7 +21,11 @@ const LotteryNoSearch = () => {
                 {
                     (lotteryResults !== null && lotteryResults instanceof Object) && <>
                         {
-                            lotteryResults.prizeGroups.map(result => <LotteryResultGroup key={Math.random()} result={result} />)
+                            lotteryResults.prizeGroups.map(result => <LotteryResultGroup
+                                key={Math.random()}
+                                result={result}
+                                prizes={lotteryResults.prizes}
+                            />)
                         }
                     </>
                 }
