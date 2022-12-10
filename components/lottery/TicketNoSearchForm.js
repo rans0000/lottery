@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 
+import buildApiURL from '../../utils/apiUrlConstants';
+
 const TicketNoSearchForm = props => {
 
     const [ticketNo, setTicketNo] = useState('');
@@ -49,7 +51,7 @@ const TicketNoSearchForm = props => {
             return;
         }
         try {
-            const response = await fetch(`/api/lottery/prize?ticketNo=${request.ticketNo}&date=${request.date}`);
+            const response = await fetch(buildApiURL('lottery.getPrize', [request.ticketNo, request.date]));
             const result = await response.json();
             setLotteryResult(result?.payload);
 

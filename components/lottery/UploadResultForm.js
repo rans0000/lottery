@@ -4,6 +4,8 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 
+import buildApiURL from '../../utils/apiUrlConstants';
+
 const UploadResultForm = () => {
     const [file, setFile] = useState();
 
@@ -22,7 +24,7 @@ const UploadResultForm = () => {
             }
         };
         try {
-            const response = await fetch('/api/lottery/result', {
+            const response = await fetch(buildApiURL('lottery.uploadLotteryResult'), {
                 method: 'post',
                 body: formData,
             });

@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import buildApiURL from '../../../utils/apiUrlConstants';
 
 const LotteryNoSearchForm = props => {
     const [lotteryNo, setLotteryNo] = useState('');
@@ -12,7 +13,7 @@ const LotteryNoSearchForm = props => {
     };
     const onSubmit = async event => {
         event.preventDefault();
-        const response = await fetch(`/api/lottery/result?lotteryNo=${lotteryNo}`);
+        const response = await fetch(buildApiURL('lottery.getLotteryResult', [lotteryNo]));
         const result = await response.json();
         if (!result.payload) {
             props.onSubmit(null);
