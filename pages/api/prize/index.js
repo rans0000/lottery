@@ -1,5 +1,5 @@
-import clientPromise from '../../../../classes/db';
-import { searchForPrize } from '../../../../controllers/lottery_controller'
+import clientPromise from '../../../classes/db';
+import { searchForPrize } from '../../../controllers/lottery_controller'
 
 const handler = async (req, res) => {
     /**@params {string} ticketNo */
