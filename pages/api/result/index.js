@@ -1,7 +1,7 @@
 import { createRouter, expressWrapper } from 'next-connect';
 import multer from 'multer';
 import clientPromise from '../../../classes/db';
-import { parseLotteryBuffer, saveLotteryResultToDB } from '../../../controllers/lottery_controller';
+import { parseLotteryBuffer, saveLotteryResultToDB, loadLotteryResults } from '../../../controllers/lottery_controller';
 
 const upload = multer({
     storage: multer.memoryStorage(),
@@ -26,6 +26,19 @@ apiRoute.post(async (req, res) => {
         res.status(500).json({ error: 'error while reading/saving lottery result' });
     }
 
+});
+
+apiRoute.get(async (req, res) => {
+    try {
+        const client = await clientPromise;
+        const db = client.db('test');
+        const { limit, _sort, _order } = req.query;
+        const result = await loadLotteryResults(limit, _sort, _order, db);
+        res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'error while reading lottery results' });
+    }
 });
 
 export default apiRoute.handler({

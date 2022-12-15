@@ -95,6 +95,35 @@ const searchForPrize = async (ticketNo, date, db) => {
     return promise;
 };
 
+const loadLotteryResults = async (limit = 10, sort = 'date', order = 'desc', db) => {
+    const promise = new Promise(async (resolve, reject) => {
+        let result = [];
+        db.collection('results')
+            .aggregate(
+                [
+                    {
+                        '$addFields': {
+                            'prizeAmount': '$prizes.prize1',
+                            'winnerNo': { '$first': '$entries.ticketNo' }
+                        },
+                    },
+                    {
+                        '$project': {
+                            'entries': 0,
+                            'prizes': 0,
+                        }
+                    }
+                ]
+            )
+            .sort({ date: -1 })
+            .limit(parseInt(limit, 10))
+            .forEach(doc => result.push(doc))
+            .then(() => resolve(result))
+            .catch(error => reject(error));
+    });
+    return promise;
+};
+
 const loadLotteryResultByKey = async (key, value, db) => {
     const promise = new Promise(async (resolve, reject) => {
         try {
@@ -109,4 +138,4 @@ const loadLotteryResultByKey = async (key, value, db) => {
     return promise;
 };
 
-export { parseLotteryFile, parseLotteryBuffer, saveLotteryResultToDB, searchForPrize, loadLotteryResultByKey };
+export { parseLotteryFile, parseLotteryBuffer, saveLotteryResultToDB, searchForPrize, loadLotteryResults, loadLotteryResultByKey };
