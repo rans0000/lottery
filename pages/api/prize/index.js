@@ -10,7 +10,6 @@ const handler = async (req, res) => {
     const { ticketNo, date } = req.query;
     /**@todo : validate user data */
     try {
-        console.log('xxxx', decodeURIComponent(ticketNo), decodeURIComponent(date));
         const result = await searchForPrize(decodeURIComponent(ticketNo), decodeURIComponent(date), db);
         res.status(200).json({ payload: result });
     } catch (error) {

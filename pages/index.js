@@ -1,15 +1,17 @@
-import React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Head from 'next/head';
+import React from 'react';
 
 import LotteryNoSearch from '../components/lottery/LotteryNoSearch';
+import LotteryResultList from '../components/lottery/LotteryResultList';
 import TicketNoSearchForm from '../components/lottery/TicketNoSearchForm';
+import buildApiURL from '../utils/apiUrlConstants';
 
-export default function Home() {
-  const [currentTab, setCurrentTab] = React.useState(1);
+export default function Home({ lotteryResults }) {
+  const [currentTab, setCurrentTab] = React.useState(0);
 
   const onTabChange = (event, value) => {
     setCurrentTab(value);
@@ -21,14 +23,16 @@ export default function Home() {
         <title>Lottery Website | Home</title>
       </Head>
       <Tabs value={currentTab} onChange={onTabChange}>
-        <Tab label='Prize Search' />
         <Tab label='Result Search' />
+        <Tab label='Prize Search' />
       </Tabs>
       <TabPanel value={currentTab} index={0}>
-        <TicketNoSearchForm />
+        <LotteryNoSearch />
+        <Box sx={{ height: 24 }}> </Box>
+        <LotteryResultList results={lotteryResults} />
       </TabPanel>
       <TabPanel value={currentTab} index={1}>
-        <LotteryNoSearch />
+        <TicketNoSearchForm />
       </TabPanel>
       <div>
         <br />
@@ -52,4 +56,12 @@ function TabPanel(props) {
       {children}
     </Box>) : null;
 }
+
+export const getStaticProps = async () => {
+  const result = await fetch(buildApiURL('lottery.getLotteryResultList', [4, 'date', 'desc'], true));
+  const lotteryResults = await result.json();
+  return {
+    props: { lotteryResults }
+  };
+};
 
