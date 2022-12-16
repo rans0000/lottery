@@ -43,8 +43,8 @@ const TicketNoSearchForm = props => {
         event.preventDefault();
         /**@todo: form validation */
         const request = {
-            ticketNo: encodeURIComponent(ticketNo.trim()),
-            date: encodeURIComponent(dayjs(date).format('YYYY-MM-DD'))
+            ticketNo: ticketNo.trim(),
+            date: dayjs(date).format('YYYY-MM-DD')
         };
         if (!isFormValid(request)) {
             setAlertOpen(true);

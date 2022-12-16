@@ -19,7 +19,7 @@ const buildApiURL = (key, params = [], isFullPath = false) => {
 function replaceParams(url, params) {
     const regex = /:[A-Za-z0-9\-]+/g;
     let index = 0;
-    const path = url.replace(regex, (match, offset) => params[index++]);
+    const path = url.replace(regex, (match, offset) => encodeURIComponent(params[index++]));
     return path;
 }
 
