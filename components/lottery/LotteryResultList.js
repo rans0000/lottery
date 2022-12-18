@@ -8,10 +8,17 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import dayjs from 'dayjs';
 import React from 'react';
+import { useRouter } from 'next/router';
 
 const LotteryResultList = ({ results }) => {
+    const router = useRouter();
+
+    const handleItemSelect = lotteryNo => event => {
+        router.push(`/result/${lotteryNo}`);
+    };
+
     return (
-        <Card>
+        <Card className='lotter-result-list-wrapper'>
             <TableContainer>
                 <Table aria-label='recent lottery results'>
                     <TableHead>
@@ -27,14 +34,18 @@ const LotteryResultList = ({ results }) => {
                         {
                             results.map(result => (
                                 <TableRow
-                                    key={result._id}
                                     hover
+                                    key={result._id}
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={handleItemSelect(result.lotteryNo)}
                                 >
                                     <TableCell component='th' scope='row'>{`${dayjs(result.date).format('DD MMM')}`.toUpperCase()}</TableCell>
                                     <TableCell align='right'>{result.lotteryNo}</TableCell>
                                     <TableCell align='right'>{result.prizeAmount}</TableCell>
                                     <TableCell align='right'>{result.winnerNo}</TableCell>
-                                    <TableCell align='right'><DeleteIcon sx={{ fontSize: 16 }} /></TableCell>
+                                    <TableCell align='right'>
+                                        <DeleteIcon sx={{ fontSize: 16 }} />
+                                    </TableCell>
                                 </TableRow>
                             ))
                         }
