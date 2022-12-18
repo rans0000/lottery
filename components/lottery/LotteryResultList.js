@@ -7,14 +7,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import dayjs from 'dayjs';
-import React from 'react';
 import { useRouter } from 'next/router';
+import React from 'react';
 
-const LotteryResultList = ({ results }) => {
+const LotteryResultList = ({ results, onSelect }) => {
     const router = useRouter();
 
     const handleItemSelect = lotteryNo => event => {
-        router.push(`/result/${lotteryNo}`);
+        onSelect(lotteryNo);
     };
 
     return (

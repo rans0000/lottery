@@ -1,42 +1,46 @@
-import React, { useState } from 'react';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import buildApiURL from '../../../utils/apiUrlConstants';
+import React, { useState } from 'react';
 
-const LotteryNoSearchForm = props => {
-    const [lotteryNo, setLotteryNo] = useState('');
+const LotteryNoSearchForm = (props) => {
+    const [lotteryNo, setLotteryNo] = useState(props.lotteryNo || '');
     const onInputChange = event => {
         event.preventDefault();
         setLotteryNo(event.target.value.trim().toUpperCase());
     };
-    const onSubmit = async event => {
+    // const onSubmit = async event => {
+    //     event.preventDefault();
+    //     const response = await fetch(buildApiURL('lottery.getLotteryResult', [lotteryNo]));
+    //     const result = await response.json();
+    //     if (!result.payload) {
+    //         props.onSubmit(null);
+    //         return;
+    //     };
+    //     let keys = [];
+    //     let temp;
+    //     let prizeGroups = [];
+    //     result.payload.entries.forEach(item => {
+    //         if (!keys.includes(item.prize)) {
+    //             keys.push(item.prize);
+    //             prizeGroups.push({ title: item.prize, ticketNo: [] });
+    //             temp = prizeGroups[prizeGroups.length - 1].ticketNo;
+    //         }
+    //         temp.push(item.ticketNo);
+    //     });
+    //     console.log(prizeGroups);
+    //     props.onSubmit({
+    //         prizeGroups,
+    //         prizes: result.payload.prizes,
+    //         date: result.payload.date,
+    //         lotteryNo: result.payload.lotteryNo
+    //     });
+    // };
+
+    const onSubmit = event => {
         event.preventDefault();
-        const response = await fetch(buildApiURL('lottery.getLotteryResult', [lotteryNo]));
-        const result = await response.json();
-        if (!result.payload) {
-            props.onSubmit(null);
-            return;
-        };
-        let keys = [];
-        let temp;
-        let prizeGroups = [];
-        result.payload.entries.forEach(item => {
-            if (!keys.includes(item.prize)) {
-                keys.push(item.prize);
-                prizeGroups.push({ title: item.prize, ticketNo: [] });
-                temp = prizeGroups[prizeGroups.length - 1].ticketNo;
-            }
-            temp.push(item.ticketNo);
-        });
-        console.log(prizeGroups);
-        props.onSubmit({
-            prizeGroups,
-            prizes: result.payload.prizes,
-            date: result.payload.date,
-            lotteryNo: result.payload.lotteryNo
-        });
+        props.onSubmit(lotteryNo);
     };
 
     return (

@@ -1,20 +1,28 @@
 import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import React from 'react';
 
-import LotteryNoSearch from '../components/lottery/LotteryNoSearch';
 import LotteryResultList from '../components/lottery/LotteryResultList';
 import TicketNoSearchForm from '../components/lottery/TicketNoSearchForm';
+import LotteryNoSearchForm from '../components/lottery/widgets/LotteryNoSearchForm';
 import buildApiURL from '../utils/apiUrlConstants';
 
 export default function Home({ lotteryResults }) {
+  const router = useRouter();
   const [currentTab, setCurrentTab] = React.useState(0);
 
   const onTabChange = (event, value) => {
     setCurrentTab(value);
+  };
+
+  const onLotteryNoSelect = lotteryNo => {
+    if (!lotteryNo) return;
+    router.push(`/result/${lotteryNo}`);
   };
 
   return (
@@ -27,9 +35,12 @@ export default function Home({ lotteryResults }) {
         <Tab label='Prize Search' />
       </Tabs>
       <TabPanel value={currentTab} index={0}>
-        <LotteryNoSearch />
+        {/* <LotteryNoSearch /> */}
+        <Card sx={{ p: 2, pb: 3 }}>
+          <LotteryNoSearchForm onSubmit={onLotteryNoSelect} />
+        </Card>
         <Box sx={{ height: 24 }}> </Box>
-        <LotteryResultList results={lotteryResults} />
+        <LotteryResultList results={lotteryResults} onSelect={onLotteryNoSelect} />
       </TabPanel>
       <TabPanel value={currentTab} index={1}>
         <TicketNoSearchForm />
