@@ -26,7 +26,7 @@ export default function Home({ lotteryResults }) {
   };
 
   return (
-    <Container maxWidth='lg'>
+    <Container maxWidth='lg' className='home-page'>
       <Head>
         <title>Lottery Website | Home</title>
       </Head>
@@ -35,7 +35,6 @@ export default function Home({ lotteryResults }) {
         <Tab label='Prize Search' />
       </Tabs>
       <TabPanel value={currentTab} index={0}>
-        {/* <LotteryNoSearch /> */}
         <Card sx={{ p: 2, pb: 3 }}>
           <LotteryNoSearchForm onSubmit={onLotteryNoSelect} />
         </Card>
