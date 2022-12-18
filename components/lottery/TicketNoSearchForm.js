@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -12,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
+import React, { useState } from 'react';
 
 import buildApiURL from '../../utils/apiUrlConstants';
 
@@ -63,7 +63,7 @@ const TicketNoSearchForm = props => {
 
     return (
         <>
-            <Card >
+            <Card className='prize-search-form'>
                 <Box component='form' style={{ padding: 20 }} onSubmit={onSubmit}>
                     <Stack
                         direction='column'
@@ -87,32 +87,32 @@ const TicketNoSearchForm = props => {
                             renderInput={(params) => <TextField {...params} />}
                         />
                         <Button type='submit' variant='contained'>Search</Button>
-                        {
-                            (lotteryResult instanceof Object && lotteryResult !== null) && (
-                                <Card style={{ padding: 20 }}>
-                                    <Typography variant='body2' gutterBottom>
-                                        {lotteryResult.prize}
-                                    </Typography>
-                                    <Typography variant="subtitle1" component="div">
-                                        {lotteryResult.ticketNo}
-                                    </Typography>
-                                    <Typography variant="h5" component="div">
-                                        Rs. {lotteryResult.prizes[lotteryResult.prize]}/-
-                                    </Typography>
-                                </Card>
-                            )}
-                        {
-                            lotteryResult === null && (
-                                <Card style={{ padding: 20 }}>
-                                    <Stack style={{ height: 50 }} justifyContent="center" alignItems="center">
-                                        <Typography variant='body2'>No prize!! unfortunately</Typography>
-                                    </Stack>
-                                </Card>
-                            )
-                        }
                     </Stack>
                 </Box>
             </Card>
+            {
+                (lotteryResult instanceof Object && lotteryResult !== null) && <>
+                    <Card style={{ padding: 20, marginTop: 16 }}>
+                        <Typography variant='body2' gutterBottom>
+                            {lotteryResult.prize}
+                        </Typography>
+                        <Typography variant="subtitle1" component="div">
+                            {lotteryResult.ticketNo}
+                        </Typography>
+                        <Typography variant="h5" component="div">
+                            Rs. {lotteryResult.prizes[lotteryResult.prize]}/-
+                        </Typography>
+                    </Card>
+                </>}
+            {
+                lotteryResult === null && <>
+                    <Card style={{ padding: 20, marginTop: 16 }}>
+                        <Stack style={{ height: 50 }} justifyContent="center" alignItems="center">
+                            <Typography variant='body2'>No prize!! unfortunately</Typography>
+                        </Stack>
+                    </Card>
+                </>
+            }
             <Dialog
                 open={isAlertOpen}
                 onClose={onAlertClose}

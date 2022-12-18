@@ -1,14 +1,15 @@
-import React from 'react';
+import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import React from 'react';
 
 const LotteryResultGroup = ({ result, prizes }) => {
     return (
-        <Box style={{ padding: 10 }}>
+        <Card className='lottery-result-item' sx={{ p: 4, my: 2 }}>
             <Typography variant='h6'>{result.title}</Typography>
             <Typography variant='subtitle1' component='span'>( Rs. {prizes[result.title]}/-)</Typography>
+            <Divider sx={{ my: 2 }} />
             <Grid container spacing={2}>
                 {
                     result.ticketNo.map(item => (
@@ -17,8 +18,7 @@ const LotteryResultGroup = ({ result, prizes }) => {
                 }
 
             </Grid>
-            <Divider />
-        </Box>
+        </Card>
     );
 };
 

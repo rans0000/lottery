@@ -1,8 +1,10 @@
 import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+
 import LotteryNoSearchForm from '../../components/lottery/widgets/LotteryNoSearchForm';
 import LotteryResultGroup from '../../components/lottery/widgets/LotteryResultGroup';
 import buildApiURL from '../../utils/apiUrlConstants';
@@ -22,7 +24,12 @@ const LotteryResultDetailsPage = ({ results }) => {
         </Head>
         <LotteryNoSearchForm onSubmit={setLotteryNo} />
         {
-            results === null && <Card>Lottery Number not found!!</Card>
+            results === null &&
+            <Card sx={cardStyle}>
+                <Stack alignItems='center' justifyContent='center' sx={{ height: '100%' }}>
+                    Lottery Number not found!!
+                </Stack>
+            </Card>
         }
         {
             (results !== null && results instanceof Object) && <>
@@ -77,4 +84,14 @@ const transformResult = result => {
         date: result.payload.date,
         lotteryNo: result.payload.lotteryNo
     };
+};
+
+const cardStyle = {
+    px: 4,
+    py: 2,
+    flexGrow: 1,
+    width: 'fit-content',
+    height: 160,
+    mx: 'auto',
+    my: 2
 };
