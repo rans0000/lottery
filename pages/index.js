@@ -67,7 +67,11 @@ function TabPanel(props) {
     </Box>) : null;
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async ({ req, res }) => {
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59'
+  );
   const result = await fetch(buildApiURL('lottery.getLotteryResultList', [4, 'date', 'desc'], true));
   const lotteryResults = await result.json();
   return {
