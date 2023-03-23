@@ -91,21 +91,26 @@ const TicketNoSearchForm = props => {
                 </Box>
             </Card>
             {
-                (lotteryResult instanceof Object && lotteryResult !== null) && <>
-                    <Card style={{ padding: 20, marginTop: 16 }}>
-                        <Typography variant='body2' gutterBottom>
-                            {lotteryResult.prize}
-                        </Typography>
-                        <Typography variant="subtitle1" component="div">
-                            {lotteryResult.ticketNo}
-                        </Typography>
-                        <Typography variant="h5" component="div">
-                            Rs. {lotteryResult.prizes[lotteryResult.prize]}/-
-                        </Typography>
-                    </Card>
-                </>}
+                (lotteryResult instanceof Array && lotteryResult.length > 0) && <>
+                    {
+                        lotteryResult.map((result, index) => <>
+                            <Card style={{ padding: 20, marginTop: 16 }}>
+                                <Typography variant='body2' gutterBottom>
+                                    {result.prize}
+                                </Typography>
+                                <Typography variant="subtitle1" component="div">
+                                    {result.ticketNo}
+                                </Typography>
+                                <Typography variant="h5" component="div">
+                                    Rs. {result.prizes[result.prize]}/-
+                                </Typography>
+                            </Card>
+                        </>)
+                    }
+                </>
+            }
             {
-                lotteryResult === null && <>
+                (lotteryResult === null || (lotteryResult instanceof Array && lotteryResult.length === 0)) && <>
                     <Card style={{ padding: 20, marginTop: 16 }}>
                         <Stack style={{ height: 50 }} justifyContent="center" alignItems="center">
                             <Typography variant='body2'>No prize!! unfortunately</Typography>

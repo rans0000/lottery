@@ -66,13 +66,22 @@ const searchForPrize = async (ticketNo, date, db) => {
     //-----------------------------------
     /**@todo: handle empty db response */
 
-    let value;
+    let value = [];
     const promise = new Promise((resolve, reject) => {
         try {
             db.collection('results')
                 .aggregate([
                     { '$unwind': '$entries' },
-                    { '$match': { 'entries.ticketNo': ticketNo, date: date } },
+                    // { '$match': { 'entries.ticketNo': ticketNo, date: date } },
+                    {
+                        '$match': {
+                            '$or': [
+                                { 'entries.ticketNo': ticketNo },
+                                { 'entries.ticketNo': { '$regex': `.*${ticketNo.slice(-4)}$` } },
+                            ],
+                            date: date
+                        }
+                    },
                     {
                         '$project': {
                             'ticketNo': '$entries.ticketNo',
@@ -81,10 +90,11 @@ const searchForPrize = async (ticketNo, date, db) => {
                         }
                     }
                 ])
-                .forEach(doc => value = doc)
+                // .forEach(doc => value = doc)
+                .forEach(doc => value.push(doc))
                 .then(() => {
-                    console.log('value...', value);
-                    resolve(value || null);
+                    // console.log('value...', value);
+                    resolve(value || []);
                 });
         }
         catch (error) {
