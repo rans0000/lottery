@@ -7,11 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import dayjs from 'dayjs';
-import { useRouter } from 'next/router';
 import React from 'react';
 
 const LotteryResultList = ({ results, onSelect }) => {
-    const router = useRouter();
 
     const handleItemSelect = lotteryNo => event => {
         onSelect(lotteryNo);
@@ -20,7 +18,7 @@ const LotteryResultList = ({ results, onSelect }) => {
     return (
         <Card className='lotter-result-list-wrapper'>
             <TableContainer>
-                <Table aria-label='recent lottery results'>
+                <Table aria-label='recent lottery results' >
                     <TableHead>
                         <TableRow>
                             <TableCell>Date</TableCell>

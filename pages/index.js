@@ -72,8 +72,13 @@ export const getServerSideProps = async ({ req, res }) => {
     'Cache-Control',
     'public, s-maxage=10, stale-while-revalidate=59'
   );
-  const result = await fetch(buildApiURL('lottery.getLotteryResultList', [4, 'date', 'desc'], true));
-  const lotteryResults = await result.json();
+  let lotteryResults;
+  try {
+    const result = await fetch(buildApiURL('lottery.getLotteryResultList', [4, 'date', 'desc'], true));
+    lotteryResults = await result.json();
+  } catch (error) {
+    lotteryResults = [];
+  }
   return {
     props: { lotteryResults }
   };
