@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import React, { useState } from "react";
 
-const DateOrDrawInput = ({ register, setValue, errors }) => {
+const DateOrDrawInput = ({ register, setValue, errors, trigger }) => {
     const [date, setDate] = useState("");
     const [open, setOpen] = React.useState(false);
 
@@ -23,6 +23,7 @@ const DateOrDrawInput = ({ register, setValue, errors }) => {
     const onDateChange = (newDate) => {
         setDate(newDate);
         setValue("dateOrDraw", newDate.toISOString().split("T")[0]);
+        trigger("dateOrDraw");
         handleClose();
     };
 

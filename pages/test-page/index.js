@@ -13,6 +13,7 @@ const TestPage = () => {
         handleSubmit,
         formState: { errors },
         setValue,
+        trigger,
     } = useForm({
         mode: "onChange",
         resolver: yupResolver(combinedSearchSchema),
@@ -35,7 +36,12 @@ const TestPage = () => {
                 alignItems="center"
                 spacing={2}
             >
-                <DateOrDrawInput register={register} errors={errors} setValue={setValue} />
+                <DateOrDrawInput
+                    register={register}
+                    errors={errors}
+                    setValue={setValue}
+                    trigger={trigger}
+                />
                 <Button type="submit" variant="contained">
                     Search
                 </Button>
