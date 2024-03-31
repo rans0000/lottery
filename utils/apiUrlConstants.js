@@ -1,9 +1,9 @@
 const API_URL = {
     lottery: {
         getPrize: '/prize?ticketNo=:ticketNo&date=:date',
-        getLotteryResultList: '/result?limit=:limit&_sort=:sort&_order=:order',
-        getLotteryResult: '/result/:lotteryNo',
-        uploadLotteryResult: '/result'
+        getLotteryResultList: '/results?limit=:limit&_sort=:sort&_order=:order',
+        getLotteryResult: '/results/:lotteryNo',
+        uploadLotteryResult: '/results'
     },
 };
 
