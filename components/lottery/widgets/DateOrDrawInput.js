@@ -1,6 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
@@ -10,6 +14,7 @@ import { combinedSearchSchema } from "../../../schema/combined_search_schema";
 
 const DateOrDrawInput = () => {
     const [date, setDate] = useState("");
+    const [open, setOpen] = React.useState(false);
     const {
         register,
         control,
@@ -21,11 +26,18 @@ const DateOrDrawInput = () => {
         resolver: yupResolver(combinedSearchSchema),
     });
 
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (value) => {
+        setOpen(false);
+    };
+
     const onDateChange = (newDate) => {
         setDate(newDate);
-        let formatter = new Intl.DateTimeFormat("en");
-        let example = formatter.formatToParts();
         setValue("dateOrDraw", newDate.toISOString().split("T")[0]);
+        handleClose();
     };
 
     const onSubmit = (formData) => {
@@ -40,7 +52,7 @@ const DateOrDrawInput = () => {
             onSubmit={handleSubmit(onSubmit)}
         >
             <Stack
-                direction="column"
+                direction="row"
                 justifyContent="center"
                 alignItems="center"
                 spacing={2}
@@ -49,13 +61,21 @@ const DateOrDrawInput = () => {
                     name="dateOrDraw"
                     label="Date/Draw number"
                     variant="standard"
-                    placeholder="ex: W-691"
+                    placeholder="ex: W-691 or 2023/09/12"
                     InputLabelProps={{ shrink: true }}
-                    inputProps={{ style: { textTransform: "uppercase" } }}
                     {...register("dateOrDraw")}
                     error={errors.dateOrDraw ? true : false}
                     helperText={errors?.dateOrDraw?.message}
                 />
+                <IconButton onClick={handleClickOpen}>
+                    <CalendarMonthIcon />
+                </IconButton>
+            </Stack>
+            <Button type="submit" variant="contained">
+                Search
+            </Button>
+            <Dialog onClose={handleClose} open={open}>
+                <DialogTitle>Set backup account</DialogTitle>
                 <StaticDatePicker
                     disableFuture
                     label="Basic example"
@@ -65,10 +85,7 @@ const DateOrDrawInput = () => {
                     onChange={onDateChange}
                     renderInput={(params) => <TextField {...params} />}
                 />
-                <Button type="submit" variant="contained">
-                    Search
-                </Button>
-            </Stack>
+            </Dialog>
         </Box>
     );
 };
