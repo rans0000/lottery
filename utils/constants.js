@@ -1,0 +1,1 @@
+export const DRAW_REGEX = /^[a-z]{2}(\/|-|\s){0,1}[0-9]{3}$/i
