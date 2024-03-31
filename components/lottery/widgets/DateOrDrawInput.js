@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
+import dayjs from "dayjs";
 import React, { useState } from "react";
 
 const DateOrDrawInput = ({ register, setValue, errors, trigger }) => {
@@ -22,13 +23,9 @@ const DateOrDrawInput = ({ register, setValue, errors, trigger }) => {
 
     const onDateChange = (newDate) => {
         setDate(newDate);
-        setValue("dateOrDraw", newDate.toISOString().split("T")[0]);
+        setValue("dateOrDraw", dayjs(newDate).format("YYYY-MM-DD"));
         trigger("dateOrDraw");
         handleClose();
-    };
-
-    const onSubmit = (formData) => {
-        console.log(formData);
     };
 
     return (
@@ -41,7 +38,7 @@ const DateOrDrawInput = ({ register, setValue, errors, trigger }) => {
             >
                 <TextField
                     name="dateOrDraw"
-                    label="Date/Draw number"
+                    label="Date / Draw number"
                     variant="standard"
                     placeholder="ex: W-691 or 2023/09/12"
                     InputLabelProps={{ shrink: true }}
