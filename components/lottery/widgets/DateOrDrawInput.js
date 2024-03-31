@@ -1,7 +1,5 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
@@ -9,22 +7,10 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { combinedSearchSchema } from "../../../schema/combined_search_schema";
 
-const DateOrDrawInput = () => {
+const DateOrDrawInput = ({ register, setValue, errors }) => {
     const [date, setDate] = useState("");
     const [open, setOpen] = React.useState(false);
-    const {
-        register,
-        control,
-        handleSubmit,
-        formState: { errors },
-        setValue,
-    } = useForm({
-        mode: "onChange",
-        resolver: yupResolver(combinedSearchSchema),
-    });
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -45,12 +31,7 @@ const DateOrDrawInput = () => {
     };
 
     return (
-        <Box
-            className="input-dateordraw"
-            sx={{ pt: 3 }}
-            component="form"
-            onSubmit={handleSubmit(onSubmit)}
-        >
+        <Box className="input-dateordraw" sx={{ pt: 3 }}>
             <Stack
                 direction="row"
                 justifyContent="center"
@@ -71,9 +52,6 @@ const DateOrDrawInput = () => {
                     <CalendarMonthIcon />
                 </IconButton>
             </Stack>
-            <Button type="submit" variant="contained">
-                Search
-            </Button>
             <Dialog onClose={handleClose} open={open}>
                 <DialogTitle>Set backup account</DialogTitle>
                 <StaticDatePicker

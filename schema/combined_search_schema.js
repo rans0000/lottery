@@ -3,8 +3,8 @@ import dayjs from "dayjs";
 
 yup.addMethod(yup.MixedSchema, "dateOrDrawSchema", function (schemas) {
     return this.test(
-        "one-of-dateordraw",
-        "schemas are wrong at ${path}",
+        "one-of-date-or-draw",
+        "Please enter a draw number or date",
         (item) => {
             return schemas.some((schema) =>
                 schema.isValidSync(item, { strict: false })
