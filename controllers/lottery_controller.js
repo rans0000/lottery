@@ -1,5 +1,9 @@
 import { PdfReader } from "pdfreader";
 import LotteryResult from "../classes/lottery_result";
+import { combinedSearchSchema } from "../schema/combined_search_schema";
+import * as yup from "yup";
+import { DRAW_REGEX } from "../utils/constants";
+import dayjs from "dayjs";
 
 const parsePdf = function (resolve, reject) {
     let data = "";
@@ -155,11 +159,20 @@ const transformResult = (result) => {
     };
 };
 
-const loadLotteryResultByKey = async (key, value, db) => {
+const loadLotteryResultByKey = async (value, db) => {
     const promise = new Promise(async (resolve, reject) => {
         try {
             let filter = {};
-            filter[key] = value;
+
+            if (yup.string().matches(DRAW_REGEX, { excludeEmptyString: true, }).isValidSync(value)) {
+                filter['lotteryNo'] = value;
+            } else if (yup.string().test("is-a-date", "", (value) => dayjs(value, ["YYYY-MM-DD", "YYYY/MM/DD"], true).isValid()
+            ).isValidSync(value)) {
+                filter['date'] = value;
+            } else {
+                throw 'Invalid key for searching lottery results'
+            }
+
             const response = await db.collection("results").findOne(filter);
             resolve(transformResult(response));
         } catch (error) {
@@ -170,7 +183,10 @@ const loadLotteryResultByKey = async (key, value, db) => {
 };
 
 export {
-    loadLotteryResultByKey, loadLotteryResults, parseLotteryBuffer, parseLotteryFile, saveLotteryResultToDB,
-    searchForPrize
+    loadLotteryResultByKey,
+    loadLotteryResults,
+    parseLotteryBuffer,
+    parseLotteryFile,
+    saveLotteryResultToDB,
+    searchForPrize,
 };
-

@@ -6,7 +6,7 @@ const handler = async (req, res) => {
         const client = await clientPromise;
         const db = client.db("test");
         const { lotteryNo } = req.query;
-        const result = await loadLotteryResultByKey("lotteryNo", lotteryNo, db);
+        const result = await loadLotteryResultByKey(lotteryNo, db);
         res.status(200).json({ payload: result });
     } catch (error) {
         console.log(error);
