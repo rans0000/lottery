@@ -16,7 +16,7 @@ const LotteryResultDetailsPage = ({ results }) => {
     useEffect(() => {
         if (!lotteryNo || lotteryNo === router.query.lotteryNo) return;
         router.push(`/result/${lotteryNo}`);
-    }, [lotteryNo]);
+    }, [lotteryNo, router]);
 
     return <Container maxWidth='lg' className='lotter-result-page'>
         <Head>
