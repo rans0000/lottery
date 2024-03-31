@@ -16,7 +16,7 @@ const LotteryResultDetailsPage = ({ results }) => {
 
     useEffect(() => {
         if (!lotteryNo || lotteryNo === router.query.lotteryNo) return;
-        router.push(`/result/${lotteryNo}`);
+        router.push(`/results/${lotteryNo}`);
     }, [lotteryNo, router]);
 
     return (
@@ -24,7 +24,7 @@ const LotteryResultDetailsPage = ({ results }) => {
             <Head>
                 <title>{`Lottery Website | ${router.query.lotteryNo}`}</title>
             </Head>
-            <LotteryNoSearchForm onSubmit={setLotteryNo} />
+            <LotteryNoSearchForm defaultValue={router.query.lotteryNo || ''} onSubmit={setLotteryNo} />
             {results === null && (
                 <Card sx={cardStyle}>
                     <Stack
@@ -39,7 +39,7 @@ const LotteryResultDetailsPage = ({ results }) => {
             {results !== null && results instanceof Object && (
                 <>
                     <Typography variant="h4" align="center" mt={2}>
-                        {router.query.lotteryNo}
+                        {results.lotteryNo} ({results.date})
                     </Typography>
                     {results.prizeGroups.map((result) => (
                         <LotteryResultGroup

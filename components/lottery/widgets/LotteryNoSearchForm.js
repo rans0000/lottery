@@ -1,38 +1,52 @@
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import React, { useState } from 'react';
+import { yupResolver } from "@hookform/resolvers/yup";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import DateOrDrawInput from "./DateOrDrawInput";
+import { combinedSearchSchema } from "../../../schema/combined_search_schema";
 
 const LotteryNoSearchForm = (props) => {
-    const [lotteryNo, setLotteryNo] = useState(props.lotteryNo || '');
-    const onInputChange = event => {
-        event.preventDefault();
-        setLotteryNo(event.target.value.trim().toUpperCase());
-    };
+    const {
+        register,
+        control,
+        handleSubmit,
+        formState: { errors },
+        setValue,
+        trigger,
+    } = useForm({
+        mode: "onChange",
+        defaultValues: { dateOrDraw: props.defaultValue },
+        resolver: yupResolver(combinedSearchSchema),
+    });
 
-    const onSubmit = event => {
-        event.preventDefault();
-        props.onSubmit(lotteryNo);
+    const onSubmit = (formData) => {
+        props.onSubmit(formData.dateOrDraw);
     };
 
     return (
-        <Box className='lotteryno-search-form' sx={{ pt: 3 }} component='form' onSubmit={onSubmit}>
+        <Box
+            className="lotteryno-search-form"
+            sx={{ pt: 3 }}
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+        >
             <Stack
-                direction='column'
-                justifyContent='center'
-                alignItems='center'
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
                 spacing={2}
             >
-                <TextField
-                    id='lotteryNo'
-                    label='Lottery Number'
-                    variant='outlined'
-                    placeholder='ex: W-691'
-                    value={lotteryNo}
-                    onChange={onInputChange}
+                <DateOrDrawInput
+                    register={register}
+                    errors={errors}
+                    setValue={setValue}
+                    trigger={trigger}
                 />
-                <Button type='submit' variant='contained'>Search</Button>
+                <Button type="submit" variant="contained">
+                    Search
+                </Button>
             </Stack>
         </Box>
     );
