@@ -97,7 +97,7 @@ const UploadResultForm = () => {
                             </Typography>
                         )}
                     </Box>
-                    <Stack direction="row" justifyContent="center">{uiState !== UI_STATE_LOADING && <CircularProgress color="primary" />}</Stack>
+                    <Stack direction="row" justifyContent="center">{uiState === UI_STATE_LOADING && <CircularProgress color="primary" />}</Stack>
                 </CardContent>
             </Card>
         </Box>
