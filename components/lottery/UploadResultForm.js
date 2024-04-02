@@ -39,9 +39,6 @@ const UploadResultForm = () => {
         try {
             setUIState(UI_STATE_LOADING);
             const res = await fetch(buildApiURL("lottery.uploadLotteryResult"), {
-                headers: {
-                    "content-type": "multipart/form-data",
-                },
                 method: "post",
                 body: formData,
             });
@@ -100,7 +97,7 @@ const UploadResultForm = () => {
                             </Typography>
                         )}
                     </Box>
-                    <Stack>{uiState === UI_STATE_LOADING && <CircularProgress />}</Stack>
+                    <Stack direction="row" justifyContent="center">{uiState !== UI_STATE_LOADING && <CircularProgress color="primary" />}</Stack>
                 </CardContent>
             </Card>
         </Box>
