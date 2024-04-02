@@ -17,6 +17,7 @@ import {
     UI_STATE_LOADING,
     UI_STATE_OK,
 } from "../../utils/constants";
+import { toast } from "react-toastify";
 
 const UploadResultForm = () => {
     const [uiState, setUIState] = useState();
@@ -46,14 +47,16 @@ const UploadResultForm = () => {
             });
             if (!res.ok) throw res;
             const result = await res.json();
-            console.log(result);
+            toast('File upload success!!', { type: "success" });
             setUIState(UI_STATE_OK);
         } catch (err) {
             setUIState(UI_STATE_ERROR);
             console.log(err);
             if (err?.status === ERR_INVALID_INPUT) {
-                console.log("invalid file....");
+                toast('Invalid file!!', { type: "error" });
+                return;
             }
+            toast('Unknown error while uploading the file!!', { type: "error" });
         }
     };
 
