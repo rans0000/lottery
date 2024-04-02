@@ -1,9 +1,8 @@
-import { PdfReader } from "pdfreader";
-import LotteryResult from "../classes/lottery_result";
-import { combinedSearchSchema } from "../schema/combined_search_schema";
-import * as yup from "yup";
-import { DRAW_REGEX } from "../utils/constants";
 import dayjs from "dayjs";
+import { PdfReader } from "pdfreader";
+import * as yup from "yup";
+import LotteryResult from "../classes/lottery_result";
+import { DRAW_REGEX } from "../utils/constants";
 
 const parsePdf = function (resolve, reject) {
     let data = "";
@@ -18,20 +17,24 @@ const parsePdf = function (resolve, reject) {
             /** End of buffer */
             resolve({ ...lotteryResult.get() });
         } else if (item.text) {
-            data += item.text;
-            lotteryResult
-                .parseDate(item.text)
-                .parseLotteryNo(item.text)
-                .identifyPrize("1st Prize Rs", "prize1", item.text)
-                .identifyPrize("Cons Prize-Rs", "prizeCons", item.text)
-                .identifyPrize("2nd Prize Rs", "prize2", item.text)
-                .identifyPrize("3rd Prize Rs", "prize3", item.text)
-                .identifyPrize("4th Prize-Rs", "prize4", item.text, is4Lettered)
-                .identifyPrize("5th Prize-Rs", "prize5", item.text, is4Lettered)
-                .identifyPrize("6th Prize-Rs", "prize6", item.text, is4Lettered)
-                .identifyPrize("7th Prize-Rs", "prize7", item.text, is4Lettered)
-                .identifyPrize("8th Prize-Rs", "prize8", item.text, is4Lettered)
-                .append(item.text);
+            try {
+                data += item.text;
+                lotteryResult
+                    .parseDate(item.text)
+                    .parseLotteryNo(item.text)
+                    .identifyPrize("1st Prize Rs", "prize1", item.text)
+                    .identifyPrize("Cons Prize-Rs", "prizeCons", item.text)
+                    .identifyPrize("2nd Prize Rs", "prize2", item.text)
+                    .identifyPrize("3rd Prize Rs", "prize3", item.text)
+                    .identifyPrize("4th Prize-Rs", "prize4", item.text, is4Lettered)
+                    .identifyPrize("5th Prize-Rs", "prize5", item.text, is4Lettered)
+                    .identifyPrize("6th Prize-Rs", "prize6", item.text, is4Lettered)
+                    .identifyPrize("7th Prize-Rs", "prize7", item.text, is4Lettered)
+                    .identifyPrize("8th Prize-Rs", "prize8", item.text, is4Lettered)
+                    .append(item.text);
+            } catch (error) {
+                reject(error);
+            }
         }
     };
 };
@@ -164,13 +167,24 @@ const loadLotteryResultByKey = async (value, db) => {
         try {
             let filter = {};
 
-            if (yup.string().matches(DRAW_REGEX, { excludeEmptyString: true, }).isValidSync(value)) {
-                filter['lotteryNo'] = value;
-            } else if (yup.string().test("is-a-date", "", (value) => dayjs(value, ["YYYY-MM-DD", "YYYY/MM/DD"], true).isValid()
-            ).isValidSync(value)) {
-                filter['date'] = value;
+            if (
+                yup
+                    .string()
+                    .matches(DRAW_REGEX, { excludeEmptyString: true })
+                    .isValidSync(value)
+            ) {
+                filter["lotteryNo"] = value;
+            } else if (
+                yup
+                    .string()
+                    .test("is-a-date", "", (value) =>
+                        dayjs(value, ["YYYY-MM-DD", "YYYY/MM/DD"], true).isValid()
+                    )
+                    .isValidSync(value)
+            ) {
+                filter["date"] = value;
             } else {
-                throw 'Invalid key for searching lottery results'
+                throw "Invalid key for searching lottery results";
             }
 
             const response = await db.collection("results").findOne(filter);
